@@ -36,8 +36,7 @@ class about extends StatelessWidget {
               "This Application gives state-wise details "
               "about coronavirus cases in India,"
               "Data scraped from the homepage of "
-              "Ministry of Health & Family Welfare."
-              "\nThe API database is updated automatically every 15 minutes.",
+              "Ministry of Health & Family Welfare.",
               textAlign: TextAlign.center,
               style: TextStyle(
                   fontSize: 60.0,
@@ -52,7 +51,7 @@ class about extends StatelessWidget {
             child: Center(
               child: RichText(
                 text: TextSpan(
-                  text: "Api Source: ",
+                  text: "Source: ",
                   style: TextStyle(color: Colors.black, fontSize: 25.0),
                   children: [
                     TextSpan(

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:liquid_pull_to_refresh/liquid_pull_to_refresh.dart';
 import './about.dart';
@@ -31,38 +32,57 @@ class _MyAppState extends State<MyApp> {
   var totalDeaths;
   var totalCases;
   var parsedData;
-  var noResponse;
+  var refreshedTime;
+  int statesLength;
 
-  final String url = 'https://covid19-mohfw.herokuapp.com/';
+  final String url =
+      'https://api.rootnet.in/covid19-in/unofficial/covid19india.org/statewise';
 
   Future<String> getList() async {
     final response =
         await http.get(url, headers: {"Accept": "application/json"});
     Map map = json.decode(response.body) as Map;
 
-    if (response.statusCode == 200) {
-      print("ok");
-    } else {
-      setState(() {
-        noResponse = "Please Turn On Data";
-      });
-    }
     setState(() {
       parsedData = map;
     });
-    var data = map['totals'];
+
+    var data = map['data']['total'];
+
+    String refreshedData = map['lastRefreshed'];
+
     setState(() {
-      totalCases = data['total'];
-      totalRecoveries = data['recoveries'];
+      totalCases = data['confirmed'];
+      totalRecoveries = data['recovered'];
       totalDeaths = data['deaths'];
-      activeCases = data['cases'];
+      activeCases = data['active'];
+      statesLength = parsedData['data']['statewise'].length;
+      var datetime = refreshedData.replaceAll('T', ' \nTime: ');
+      var dataRefreshed = datetime.replaceAll('2020', 'Date: 2020');
+      refreshedTime = dataRefreshed;
     });
+    return "${response.statusCode}";
   }
 
   @override
   // ignore: must_call_super
   void initState() {
     this.getList();
+  }
+
+  void _snackBar(BuildContext context) {
+    Flushbar(
+      icon: Icon(
+        Icons.access_time,
+        color: textColor,
+      ),
+      message: "Last Updated Time\n$refreshedTime",
+      duration: Duration(seconds: 3),
+      margin: EdgeInsets.all(10.0),
+      maxWidth: 200,
+      borderRadius: 20,
+      borderWidth: 5.0,
+    )..show(context);
   }
 
   @override
@@ -177,21 +197,26 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
       body: LiquidPullToRefresh(
+        springAnimationDurationInMilliseconds: 100,
         showChildOpacityTransition: false,
-        animSpeedFactor: 100.0,
-        onRefresh: getList,
+        onRefresh: () {
+          _snackBar(context);
+          return getList();
+        },
         child: ListView.separated(
           padding: EdgeInsets.only(left: 60.0, right: 60.0),
           separatorBuilder: (context, index) => Divider(
             color: stateColor,
           ),
-          itemCount: 35,
+          itemCount: statesLength == null ? 1 : statesLength,
           itemBuilder: (BuildContext context, index) {
-            return parsedData == null
+            return statesLength == null
                 ? Center(
-                    child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
                       child: Text(
                         "Fetching Data Please Wait",
+                        textAlign: TextAlign.center,
                         style: TextStyle(fontSize: 20.0),
                       ),
                     ),
@@ -199,7 +224,7 @@ class _MyAppState extends State<MyApp> {
                 : ListTile(
                     title: Center(
                       child: Text(
-                        "\n${parsedData['states'][index]['state']}",
+                        "\n${parsedData['data']['statewise'][index]['state']}",
                         textAlign: TextAlign.center,
                         style: TextStyle(
                             color: stateColor,
@@ -209,10 +234,10 @@ class _MyAppState extends State<MyApp> {
                     ),
                     subtitle: Center(
                       child: Text(
-                        "\nConfirmed Cases: ${parsedData['states'][index]['total']}\n"
-                        "Active Cases: ${parsedData['states'][index]['cases']}\n"
-                        "Recovered Cases:  ${parsedData['states'][index]['recoveries']}\n"
-                        "Deaths: ${parsedData['states'][index]['deaths']}\n",
+                        "\nConfirmed Cases: ${parsedData['data']['statewise'][index]['confirmed']}\n"
+                        "Active Cases: ${parsedData['data']['statewise'][index]['active']}\n"
+                        "Recovered Cases:  ${parsedData['data']['statewise'][index]['recovered']}\n"
+                        "Deaths: ${parsedData['data']['statewise'][index]['deaths']}\n",
                         style: TextStyle(
                           color: stateColor,
                           fontSize: 20.0,

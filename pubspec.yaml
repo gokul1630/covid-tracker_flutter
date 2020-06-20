@@ -3,7 +3,7 @@ description: covid tracker
 
 publish_to: 'none'
 
-version: 1.0.0+1
+version: 2.0.0+1
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -14,11 +14,12 @@ dependencies:
 
   cupertino_icons: ^0.1.3
   http: ^0.12.1
-  liquid_pull_to_refresh: ^2.0.0
   progress_dialog: ^1.2.3
+  liquid_pull_to_refresh: ^2.0.0
   responsive_widgets: ^2.0.1
   flutter_emoji: ^2.2.1+1
   url_launcher: ^5.4.11
+  flushbar: ^1.5.0
 
 dev_dependencies:
   flutter_test:
