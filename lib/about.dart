@@ -3,7 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_widgets/responsive_widgets.dart';
 import 'package:flutter_emoji/flutter_emoji.dart';
-import 'package:url_launcher/url_launcher.dart';
+//import 'package:url_launcher/url_launcher.dart';
 
 class about extends StatelessWidget {
   Widget _getImage() {
@@ -64,12 +64,12 @@ class about extends StatelessWidget {
                         recognizer: TapGestureRecognizer()
                           ..onTap = () async {
                             const url = 'https://www.mohfw.gov.in';
-                            if (await canLaunch(url)) {
-                              await launch(
-                                url,
-                                forceSafariVC: false,
-                              );
-                            }
+//                            if (await canLaunch(url)) {
+//                              await launch(
+//                                url,
+//                                forceSafariVC: false,
+//                              );
+//                            }
                           }),
                   ],
                 ),
