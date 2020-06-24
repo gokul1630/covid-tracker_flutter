@@ -10,6 +10,7 @@ import 'package:covidtracker/about.dart';
 
 const textColor = Colors.white;
 const stateColor = Colors.black;
+const textSize = 18.0;
 
 class Protrait extends StatefulWidget {
   @override
@@ -82,14 +83,16 @@ class _ProtraitState extends State<Protrait> {
       context,
       height: 1920, // Optional
       width: 1080, // Optional
-//      allowFontScaling: true, // Optional
+      allowFontScaling: true, // Optional
     );
 
     return Scaffold(
       appBar: AppBar(
         title: TextResponsive(
           "India Covid-19 Tracker",
-          style: TextStyle(fontSize: 60.0),
+          style: TextStyle(
+            fontSize: 60.0,
+          ),
         ),
         centerTitle: true,
         actions: [
@@ -100,106 +103,105 @@ class _ProtraitState extends State<Protrait> {
             ),
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return about();
+                return About();
               }));
             },
           ),
         ],
         bottom: PreferredSize(
           child: Container(
-            height: 110,
+            height: 160.0,
             child: Column(
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    SizedBox(
-                      height: 5.0,
-                    ),
-                    totalCases == null
-                        ? Expanded(
-                            child: TextResponsive(
-                              "Fetching Data Please Wait",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(fontSize: 40, color: textColor),
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      totalCases == null
+                          ? Expanded(
+                              child: TextResponsive(
+                                "Fetching Data Please Wait",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 50.0, color: Colors.white),
+                              ),
+                            )
+                          : Expanded(
+                              child: TextResponsive(
+                                'Total Cases\n$totalCases',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 50.0, color: Colors.white),
+                              ),
                             ),
-                          )
-                        : Expanded(
-                            child: TextResponsive(
-                              'Total Cases\n$totalCases',
-                              textAlign: TextAlign.center,
-                              style:
-                                  TextStyle(fontSize: 40.0, color: textColor),
+                      activeCases == null
+                          ? Expanded(
+                              child: TextResponsive(
+                                "Fetching Data Please Wait",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 50.0, color: Colors.white),
+                              ),
+                            )
+                          : Expanded(
+                              child: TextResponsive(
+                                'Active Cases\n$activeCases',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 50.0, color: Colors.white),
+                              ),
                             ),
-                          ),
-                    activeCases == null
-                        ? Expanded(
-                            child: TextResponsive(
-                              "Fetching Data Please Wait",
-                              textAlign: TextAlign.center,
-                              style:
-                                  TextStyle(fontSize: 40.0, color: textColor),
-                            ),
-                          )
-                        : Expanded(
-                            child: TextResponsive(
-                              'Active Cases\n$activeCases',
-                              textAlign: TextAlign.center,
-                              style:
-                                  TextStyle(fontSize: 40.0, color: textColor),
-                            ),
-                          ),
-                  ],
+                    ],
+                  ),
                 ),
                 SizedBox(
-                  height: 10.0,
+                  height: 5.0,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    totalRecoveries == null
-                        ? Expanded(
-                            child: TextResponsive(
-                              "Fetching Data Please Wait",
-                              textAlign: TextAlign.center,
-                              style:
-                                  TextStyle(fontSize: 40.0, color: textColor),
+                Expanded(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      totalRecoveries == null
+                          ? Expanded(
+                              child: TextResponsive(
+                                "Fetching Data Please Wait",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 50.0, color: Colors.white),
+                              ),
+                            )
+                          : Expanded(
+                              child: TextResponsive(
+                                'Recovered Cases\n$totalRecoveries',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 50.0, color: Colors.white),
+                              ),
                             ),
-                          )
-                        : Expanded(
-                            child: TextResponsive(
-                              'Recovered Cases\n$totalRecoveries',
-                              textAlign: TextAlign.center,
-                              style:
-                                  TextStyle(fontSize: 40.0, color: textColor),
+                      totalDeaths == null
+                          ? Expanded(
+                              child: TextResponsive(
+                                "Fetching Data Please Wait",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 50.0, color: Colors.white),
+                              ),
+                            )
+                          : Expanded(
+                              child: TextResponsive(
+                                'Deaths Cases\n$totalDeaths',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 50.0, color: Colors.white),
+                              ),
                             ),
-                          ),
-                    totalDeaths == null
-                        ? Expanded(
-                            child: TextResponsive(
-                              "Fetching Data Please Wait",
-                              textAlign: TextAlign.center,
-                              style:
-                                  TextStyle(fontSize: 40.0, color: textColor),
-                            ),
-                          )
-                        : Expanded(
-                            child: TextResponsive(
-                              'Deaths Cases\n$totalDeaths',
-                              textAlign: TextAlign.center,
-                              style:
-                                  TextStyle(fontSize: 40.0, color: textColor),
-                            ),
-                          ),
-                  ],
-                ),
-                SizedBox(
-                  height: 10.0,
+                    ],
+                  ),
                 ),
               ],
             ),
           ),
-          preferredSize: Size.fromHeight(110),
+          preferredSize: Size.fromHeight(150),
         ),
       ),
       body: LiquidPullToRefresh(

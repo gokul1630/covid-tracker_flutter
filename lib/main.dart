@@ -7,8 +7,8 @@ void main() => runApp(
         debugShowCheckedModeBanner: false,
         title: "India Covid-19 Tracker",
         theme: ThemeData(
-            primarySwatch: Colors.red,
-            scaffoldBackgroundColor: Color(0xFFFFFFFF)),
+          primarySwatch: Colors.green,
+        ),
         home: MyApp(),
       ),
     );
